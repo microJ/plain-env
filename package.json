@@ -1,0 +1,47 @@
+{
+  "name": "ts-env",
+  "version": "0.1.0",
+  "description": "auto generate ts file from config or env",
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/microJ/ts-env.git"
+  },
+  "keywords": [
+    "dotenv",
+    "dotenv ts",
+    "gen ts env",
+    "process.env",
+    "env",
+    "config",
+    "dotenv expand",
+    "env-schema",
+    "ts-dotenv"
+  ],
+  "author": "microJ",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/microJ/ts-env/issues"
+  },
+  "homepage": "https://github.com/microJ/ts-env#readme",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "ts-env": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "exports": {
+    "import": "./dist/esm/index.js",
+    "require": "./dist/index.js"
+  },
+  "types": "./dist/index.d.ts",
+  "devDependencies": {
+    "tsup": "^6.2.1",
+    "typescript": "^4.7.4"
+  }
+}
