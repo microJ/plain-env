@@ -86,10 +86,17 @@ function resolveContents(
 }
 
 function resolveValue(value: ParsedNode | Scalar) {
+  // console.log("resolveValue:", value)
   if (isScalar(value)) {
     // console.log(typeof value.value)
     // console.log(parse(value.source))
     if (typeof value.value === "string") {
+      const matched = value.value.match(/^\$(\w+)\$$/)
+      if (matched != null) {
+        const envVar = matched[1]
+        console.log("matched: ", envVar)
+        return JSON.stringify(process.env[envVar])
+      }
       return JSON.stringify(value.value)
     } else {
       return value.value

@@ -8,12 +8,14 @@
 // ⚠️ ANY MODIFIED CONTENT WILL BE LOSE
 
 // load env from process.env with js template strings
-export const ENV_FORM_PROCESS_ENV = "${asdf}" as const
+export const ENV_FORM_PROCESS_ENV = "zh_CN.UTF-8" as const
+export const ENV_NOT_FORM_PROCESS_ENV1 = "$LANG" as const
+export const ENV_NOT_FORM_PROCESS_ENV2 = "LANG$" as const
 
 export const USE_WILDCARD = true as const
 
 // comment for SHOULD_CHECK_UPDATE pre-line
-export const SHOULD_CHECK_UPDATE = false as const
+export const BOOLEAN_WITH_MODE = false as const
 
 export const STRING_WITH_MODE = "dev" as const
 

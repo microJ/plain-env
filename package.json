@@ -1,13 +1,13 @@
 {
   "name": "plain-env",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "description": "Auto generate ts/js file from config file and env",
   "packageManager": "pnpm@7.8.0",
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "b:y-env1": "node ./dist/index.js build ./examples/config/y-env1.yaml=./examples/output/y-env1.ts",
+    "b:y-env1": "node dist/index.js examples/config/y-env1.yaml=examples/output/y-env1.ts --mode dev",
     "prepublishOnly": "pnpm run build"
   },
   "repository": {
@@ -23,7 +23,9 @@
     "config",
     "dotenv expand",
     "env-schema",
-    "ts-dotenv"
+    "ts-dotenv",
+    "ts-env",
+    "plain env"
   ],
   "author": "microJ",
   "license": "MIT",
