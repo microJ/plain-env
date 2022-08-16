@@ -2,13 +2,9 @@ import {
   parseAllDocuments,
   Document,
   ParsedNode,
-  YAMLMap,
-  YAMLSeq,
   Scalar,
-  Pair,
   isScalar,
   isMap,
-  parse,
 } from "yaml"
 import { Module, TargetType } from "../type.t"
 import { checkString } from "./check"
@@ -68,7 +64,7 @@ function resolveContents(
       const { key, value } = cont
       concatContent(resolveLineBefore(key))
       if (value) {
-        const jsValue = resolveValue(value, mode)
+        const jsValue = resolveValueWithMode(value, mode)
         const langExportLeft =
           module === "cjs" ? `exports.${key}` : `export const ${key}`
         const isClearJSType =
@@ -89,8 +85,7 @@ function resolveContents(
   return getContent()
 }
 
-function resolveValue(value: ParsedNode, mode?: string): any {
-  // console.log(value, isScalar(value))
+function resolveValue(value: ParsedNode | Scalar) {
   if (isScalar(value)) {
     // console.log(typeof value.value)
     // console.log(parse(value.source))
@@ -99,19 +94,26 @@ function resolveValue(value: ParsedNode, mode?: string): any {
     } else {
       return value.value
     }
-  } else if (mode && isMap(value)) {
-    const modeValue =
-    value.get(mode) !== undefined ? value.get(mode) : value.get("*")
+  }
+  return `${value}`
+}
+
+function resolveValueWithMode(value: ParsedNode, mode?: string): any {
+  // console.log(value, isScalar(value))
+  if (mode && isMap(value)) {
+    const modeValue = value.has(mode)
+      ? value.get(mode, true)
+      : value.has("*")
+      ? value.get("*", true)
+      : undefined
     // console.log("isMap:", value, value.get(mode), value.get("*"), modeValue)
     // matched mode
     if (modeValue !== undefined) {
-      return `${modeValue}`
-    } else {
-      return `${value}`
+      return resolveValue(modeValue)
     }
-  } else {
-    return `${value}`
+    return resolveValue(value)
   }
+  return resolveValue(value)
 }
 
 function resolveLineBefore<

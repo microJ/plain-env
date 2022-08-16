@@ -1,6 +1,6 @@
 {
   "name": "plain-env",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "Auto generate ts/js file from config file and env",
   "packageManager": "pnpm@7.8.0",
   "scripts": {
