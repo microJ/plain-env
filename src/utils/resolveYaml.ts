@@ -18,7 +18,8 @@ type Doc = Document.Parsed<ParsedNode>
 export function resolveYamlFile(
   content: string,
   targetType: TargetType,
-  module: Module
+  module: Module,
+  mode: string
 ) {
   const normalizedFile = parseAllDocuments(content)
   // console.log("normalizedFile:")
@@ -26,7 +27,7 @@ export function resolveYamlFile(
   const { getContent, concatContent } = genStringConcat()
 
   normalizedFile.forEach((doc) => {
-    concatContent(resolveDocument(doc, targetType, module))
+    concatContent(resolveDocument(doc, targetType, module, mode))
   })
   return getContent()
 }
@@ -34,7 +35,8 @@ export function resolveYamlFile(
 function resolveDocument(
   node: Doc,
   targetType: TargetType,
-  module: Module
+  module: Module,
+  mode: string
 ): string {
   const { getContent, concatContent } = genStringConcat()
   // console.log("Doc: ", node)
@@ -42,7 +44,7 @@ function resolveDocument(
   concatContent(resolveLineBefore(node))
 
   if (node.contents) {
-    concatContent(resolveContents(node.contents, targetType, module))
+    concatContent(resolveContents(node.contents, targetType, module, mode))
   }
 
   const docEndComment = `\n${resolveCommentAfter(node)}\n`
@@ -54,7 +56,8 @@ function resolveDocument(
 function resolveContents(
   contents: ParsedNode,
   targetType: TargetType,
-  module: Module
+  module: Module,
+  mode: string
 ): string {
   const { getContent, concatContent } = genStringConcat()
 
@@ -65,7 +68,7 @@ function resolveContents(
       const { key, value } = cont
       concatContent(resolveLineBefore(key))
       if (value) {
-        const jsValue = resolveValue(value)
+        const jsValue = resolveValue(value, mode)
         const langExportLeft =
           module === "cjs" ? `exports.${key}` : `export const ${key}`
         const isClearJSType =
@@ -86,7 +89,7 @@ function resolveContents(
   return getContent()
 }
 
-function resolveValue(value: ParsedNode): any {
+function resolveValue(value: ParsedNode, mode?: string): any {
   // console.log(value, isScalar(value))
   if (isScalar(value)) {
     // console.log(typeof value.value)
@@ -95,6 +98,16 @@ function resolveValue(value: ParsedNode): any {
       return JSON.stringify(value.value)
     } else {
       return value.value
+    }
+  } else if (mode && isMap(value)) {
+    const modeValue =
+    value.get(mode) !== undefined ? value.get(mode) : value.get("*")
+    // console.log("isMap:", value, value.get(mode), value.get("*"), modeValue)
+    // matched mode
+    if (modeValue !== undefined) {
+      return `${modeValue}`
+    } else {
+      return `${value}`
     }
   } else {
     return `${value}`

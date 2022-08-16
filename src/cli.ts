@@ -19,7 +19,8 @@ export async function mainAsync() {
 
   mountMainCommand(cli)
 
-  cli.parse(process.argv, { run: false })
+  const parsed = cli.parse(process.argv, { run: false })
+  // console.log(parsed)
   await cli.runMatchedCommand()
 
   return undefined
@@ -28,7 +29,7 @@ export async function mainAsync() {
 function mountMainCommand(cli: CAC) {
   cli
     .command(
-      "build [...(input=output)]",
+      "[...(input=output)]",
       "Auto generate ts/js file from config file and env"
     )
     .option(
@@ -47,15 +48,15 @@ function mountMainCommand(cli: CAC) {
       }
     )
     .option(
-      "--mode <your config mode>",
-      "will auto pick like `single`"
+      "--mode <your runtime env mode>",
+      "will auto pick like `CONFIG_FOR_SOMETHING[mode]`"
     )
-    .action(async (rules: string[], opts) => {
-      // console.log(rules, opts)
+    .action(async (args: string[], opts) => {
+      // console.log(args, opts)
 
-      for (let i = 0; i < rules.length; i++) {
+      for (let i = 0; i < args.length; i++) {
         const { inputFile, inputLang, targetFile, targetLang } =
-          resolveInputRule(rules[i])
+          resolveInputRule(args[i])
 
         if (inputLang == null) {
           throwError("input file should be json,yaml,dotenv")
@@ -69,6 +70,7 @@ function mountMainCommand(cli: CAC) {
           type: inputLang,
           targetType: targetLang,
           module: opts.module,
+          mode: opts.mode
         })
 
         // console.log("=== parse result:")
@@ -81,6 +83,11 @@ function mountMainCommand(cli: CAC) {
 
 function resolveInputRule(rule: string) {
   const [input, output] = rule.split("=")
+  if (!input || !output) {
+    throwError(
+      `args '${rule}' must be 'input=output', such as './config.yaml=./src/config.ts'`
+    )
+  }
 
   const inputLang: ConfigFileType | null = checkJsonFile(input)
     ? "json"
@@ -106,14 +113,15 @@ type ParseFileOption = {
   type: ConfigFileType
   targetType: TargetType
   module: Module
+  mode: string
 }
 
 function resolveFileToTarget(
   content: string,
-  { type, targetType, module }: ParseFileOption
+  { type, targetType, module, mode }: ParseFileOption
 ) {
   if (type === "yaml") {
-    const result = resolveYamlFile(content, targetType, module)
+    const result = resolveYamlFile(content, targetType, module, mode)
     return result
   }
 

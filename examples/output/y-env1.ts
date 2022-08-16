@@ -8,13 +8,13 @@
 // ⚠️ ANY MODIFIED CONTENT WILL BE LOSE
 
 // comment for SHOULD_CHECK_UPDATE pre-line
-export const SHOULD_CHECK_UPDATE = {"dev":false,"test":false,"pre":true,"prod":true} as const
+export const SHOULD_CHECK_UPDATE = false as const
 
 // multi line comment 1
 // multi line comment 2
-export const DATA_IS_MAP = {"dev":{"a":1,"b":2},"test":{"a":11,"b":22},"pre":{"a":111,"b":222},"prod":{"a":1111,"b":2222}} as const
+export const DATA_IS_MAP = {"a":1,"b":2} as const
 
-export const DATA_IS_ARRAY = {"dev":[1,2],"test":[2,3],"pre":[3,4],"prod":[4,5]} as const
+export const DATA_IS_ARRAY = [1,2] as const
 
 // multi line comment 1
 // multi line comment 2
@@ -57,7 +57,7 @@ export const ARRAY = [1,2,3,4] as const
 
 export const DOC2 = true as const // is DOC2 end comment exist
 
-export const USE_WILDCARD = {"*":true,"prod":false} as const
+export const USE_WILDCARD = true as const
 
 // load env from process.env with js template strings
 export const ENV_FORM_PROCESS_ENV = "${asdf}" as const

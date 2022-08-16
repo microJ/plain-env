@@ -1,6 +1,6 @@
 {
   "name": "plain-env",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Auto generate ts/js file from config file and env",
   "packageManager": "pnpm@7.8.0",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1",
     "b:y-env1": "node ./dist/index.js build ./examples/config/y-env1.yaml=./examples/output/y-env1.ts",
-    "prepublish": "pnpm run build"
+    "prepublishOnly": "pnpm run build"
   },
   "repository": {
     "type": "git",
