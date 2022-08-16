@@ -1,4 +1,4 @@
-# ts-env
+# plain-env
 
 Auto generate ts/js file from config file and env
 
@@ -14,17 +14,17 @@ Auto generate ts/js file from config file and env
 
 ## 使用
 
-安装： `npm i -D ts-env` 或 `yarn add -D ts-env` 或 `pnpm add -D ts-env`
+安装： `npm i -D plain-env` 或 `yarn add -D plain-env` 或 `pnpm add -D plain-env`
 
 1. 转换配置文件
 
-   `ts-env build {input-file}={output-file}`
+   `plain-env build {input-file}={output-file}`
 
 2. 指定环境
 
-   `ts-env build --mode {标识1} --mode {标识2}`
+   `plain-env build --mode {标识1} --mode {标识2}`
 
-   假如你的产品对应了 `dev`、`test`、`pre`、`prod` 4 套环境 + `oss-hangzhou`、`oss-shanghai` 2 个特异化配置，则可以通过 `ts-env dev oss-hangzhou` 自动处理环境配置
+   假如你的产品对应了 `dev`、`test`、`pre`、`prod` 4 套环境 + `oss-hangzhou`、`oss-shanghai` 2 个特异化配置，则可以通过 `plain-env dev oss-hangzhou` 自动处理环境配置
 
 3. 加载配置文件
 
@@ -42,7 +42,7 @@ Auto generate ts/js file from config file and env
 
 5. 指定接收值
 
-   `ts-env --inject NODE_ENV=1 --inject ENV=2`
+   `plain-env --inject NODE_ENV=1 --inject ENV=2`
 
 ## 最佳实践
 

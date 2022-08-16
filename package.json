@@ -1,5 +1,5 @@
 {
-  "name": "ts-env",
+  "name": "plain-env",
   "version": "0.1.0",
   "description": "Auto generate ts/js file from config file and env",
   "packageManager": "pnpm@7.8.0",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/microJ/ts-env.git"
+    "url": "git+https://github.com/microJ/plain-env.git"
   },
   "keywords": [
     "dotenv",
@@ -28,14 +28,14 @@
   "author": "microJ",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/microJ/ts-env/issues"
+    "url": "https://github.com/microJ/plain-env/issues"
   },
-  "homepage": "https://github.com/microJ/ts-env#readme",
+  "homepage": "https://github.com/microJ/plain-env#readme",
   "files": [
     "dist"
   ],
   "bin": {
-    "ts-env": "./dist/index.js"
+    "plain-env": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "exports": {
