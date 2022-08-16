@@ -1,0 +1,14 @@
+{
+  // comment for SHOULD_CHECK_UPDATE pre-line
+  "SHOULD_CHECK_UPDATE": {
+    "dev": false,
+    "test": false,
+    "pre": true,
+    "prod": true
+  },
+
+  // all mode in one same key-value
+  "ALIAS_NAME": "cool project",
+
+  "NOT_A_NUMBER": "NaN"
+}
