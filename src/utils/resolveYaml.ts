@@ -94,7 +94,7 @@ function resolveValue(value: ParsedNode | Scalar) {
       const matched = value.value.match(/^\$(\w+)\$$/)
       if (matched != null) {
         const envVar = matched[1]
-        console.log("matched: ", envVar)
+        // console.log("matched: ", envVar)
         return JSON.stringify(process.env[envVar])
       }
       return JSON.stringify(value.value)

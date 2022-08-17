@@ -30,15 +30,15 @@ function mountMainCommand(cli: CAC) {
   cli
     .command(
       "[...(input=output)]",
-      "Auto generate ts/js file from config file and env"
+      "Replacement for `.env` and `Webpack.DefinePlugin`. Framework agnostic. Auto generate TS/JS file from config file and `process.env`, and auto pick sub-config for the target runtime/deploy environment. Support CLI & Node.js."
     )
     .option(
-      "--watch <path>",
-      "Watch mode, if path is not specified, it watches the `--dir` option. Repeat '--watch' for more than one path"
+      "--mode <runtime/deploy env>",
+      "Auto pick target sub-config like `CONFIG_MAP[mode]`"
     )
     .option(
-      "--inject <ENV=val>",
-      "Inject env to config file. Repeat '--inject' for more than one env"
+      "--inject <VAR=val>",
+      "Inject var to config file, higher priority than process.env[VAR]. Repeat '--inject' for more injecting"
     )
     .option(
       "--module <esm, cjs>",
@@ -47,10 +47,7 @@ function mountMainCommand(cli: CAC) {
         default: "esm",
       }
     )
-    .option(
-      "--mode <your runtime env mode>",
-      "will auto pick like `CONFIG_FOR_SOMETHING[mode]`"
-    )
+    .option("--watch", "Watch mode, any input file will be watching")
     .action(async (args: string[], opts) => {
       // console.log(args, opts)
 
@@ -70,7 +67,7 @@ function mountMainCommand(cli: CAC) {
           type: inputLang,
           targetType: targetLang,
           module: opts.module,
-          mode: opts.mode
+          mode: opts.mode,
         })
 
         // console.log("=== parse result:")
