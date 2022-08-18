@@ -5,17 +5,38 @@
 ![module system](https://img.shields.io/badge/Module%20System-CommonJS%20%26%20ES--Module-green)
 ![file support](https://img.shields.io/badge/file-yaml-green)
 
-Replacement for `.env` and `Webpack.DefinePlugin`. Framework agnostic. Auto generate TS/JS file from config file and `process.env`, and auto pick sub-config for the target runtime/deploy environment. Support CLI & Node.js.
+`plain-env` is a framework-agnostic `.env` and `Webpack.DefinePlugin` replacement, making business code cleaner, safer, better support `tree-shaking` and code inspection.
 
-`.env` 和 `Webpack.DefinePlugin` 的替代品。该工具与框架无关。
-自动从环境配置文件和 `process.env` 创建 TS/JS 配置导出文件，支持自动选择对应部署环境的子配置。支持命令行和 Node.js。
+`plain-env` 是框架无关的 `.env` 和 `Webpack.DefinePlugin` 的替代品，让业务代码更干净、更安全、更好的支持 `tree-shaking` 和代码检查。
+
+## 为什么是 plain-env
+
+1. `plain-env` 的使用与工程框架完全解耦，提供命令行和 Node.js 支持。
+
+   以前通过 `Webpack.DefinePlugin` 动态注入并替换业务代码中的 `process.env.xx` 的耦合方式。
+
+   现在只需要 `import {xx} from "./config.ts"` 即可。
+
+2. `plain-env` 通过解析配置声明文件自动生成 TS/JS 文件，通过 `import` 在业务代码中使用。
+
+   绝佳的隔离了工程环境和业务环境。
+
+   同时保留了注释在 IDE 中的提示。
+
+3. `plain-env` 支持自动选择对应部署环境的子配置，拒绝导出一切无用信息，防止误用。
+
+4. `plain-env` 支持从 `CI/CD` 中接受环境变量的注入，避免关键信息配置在代码仓库中有泄漏风险。
+
+5. TS/JS 的静态化导出有更好的支持类型提示、打包过程的静态错误检查和 `tree-shaking`。
+
+   完全规避掉了前端业务代码中使用 `process.env` 的缺点。
 
 ## 特性
 
 - 简单、灵活、易用
 - 框架无关
 - 支持命令行 `plain-env ...`
-- 自动注入系统环境变量 process.env.xx / --inject
+- 自动注入系统环境变量 `process.env.xx` / --inject
 - 自定义输出环境 `--mode`
 - 配置项类型的近乎完备支持
 - TS/JS 双运行环境支持
@@ -137,3 +158,7 @@ TODO
 2. 有更好的数据层级支持
 
 关于 yaml 的使用，更多信息访问这里: https://eemeli.org/yaml/
+
+**构建到不同 mode 时，指定的 output.ts 文件内容总是变化怎么办**
+
+将 `output.ts` 添加到 `.gitignore` 即可
