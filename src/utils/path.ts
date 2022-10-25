@@ -1,5 +1,5 @@
-import { join } from "node:path"
+import { join, isAbsolute } from 'node:path'
 
-export function joinCWDPath(path: string) {
-  return join(process.cwd(), path)
+export function joinPath(path: string) {
+  return isAbsolute(path) ? path : join(process.cwd(), path)
 }

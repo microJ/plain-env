@@ -45,11 +45,10 @@
 
 TODO:
 
-- [ ] 通过 `import`/`require` 使用
-- [ ] 多文件类型支持
+- [x] 通过 `import`/`require` 使用
 - [ ] 测试用例
 - [ ] --watch
-- [ ] --inject
+- [ ] <del>多文件类型支持</del>
 
 ## 使用
 
@@ -91,26 +90,22 @@ TODO:
 
 ```yaml
 ENV_TAG:
-  dev: "dev"
-  test: "test"
-  pro: "pro"
+  dev: 'dev'
+  test: 'test'
+  pro: 'pro'
 VAR_1:
-  "*": 123
+  '*': 123
   pro: 456
-PLAIN: "plain-env"
+PLAIN: 'plain-env'
 ```
 
 使用 `--mode test` 生成的配置为:
 
 ```ts
-export const ENV_TAG = "test" as const;
-export const VAR_1 = 123 as const;
-export const PLAIN = "plain-env" as const;
+export const ENV_TAG = 'test' as const
+export const VAR_1 = 123 as const
+export const PLAIN = 'plain-env' as const
 ```
-
-**--inject**
-
-TODO
 
 **--module**
 
@@ -155,10 +150,11 @@ TODO
 **为什么推荐使用 yaml，而不是 json/.env？**
 
 1. 有更完备的数据类型支持
+
 2. 有更好的数据层级支持
 
 关于 yaml 的使用，更多信息访问这里: https://eemeli.org/yaml/
 
-**构建到不同 mode 时，指定的 output.ts 文件内容总是变化怎么办**
+**构建到不同 mode 时，指定的 output.ts 文件内容总是变化怎么办?**
 
 将 `output.ts` 添加到 `.gitignore` 即可
