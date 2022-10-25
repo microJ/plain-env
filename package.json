@@ -59,7 +59,7 @@
   },
   "main": "./dist/index.js",
   "exports": {
-    "import": "./dist/esm/index.js",
+    "import": "./dist/index.mjs",
     "require": "./dist/index.js"
   },
   "types": "./dist/index.d.ts",
@@ -71,7 +71,7 @@
   },
   "dependencies": {
     "@types/fs-extra": "^9.0.13",
-    "cac": "^6.7.12",
+    "cac": "^6.7.14",
     "colorette": "^2.0.19",
     "fs-extra": "^10.1.0"
   }

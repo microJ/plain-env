@@ -8,6 +8,5 @@ export default defineConfig((options) => {
     sourcemap: options.sourcemap,
     clean: true,
     dts: true,
-    legacyOutput: true,
   }
 })

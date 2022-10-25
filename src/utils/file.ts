@@ -1,9 +1,10 @@
-import { throwError } from "./error"
-import { readFile, outputFile } from "fs-extra"
+import { throwError } from './error'
+import fse from 'fs-extra'
+const { readFile, outputFile } = fse
 
 export async function loadFileAsync(path: string) {
   try {
-    const file = await readFile(path, "utf-8")
+    const file = await readFile(path, 'utf-8')
     return file
   } catch (err) {
     console.error(err)

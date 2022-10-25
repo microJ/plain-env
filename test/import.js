@@ -1,4 +1,4 @@
-const { injectAsync } = require('../dist')
+const { injectAsync } = require('../dist/index.js')
 const path = require('node:path')
 
 async function run() {
