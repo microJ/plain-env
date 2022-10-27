@@ -11,6 +11,7 @@ import {
 import { throwError } from './utils/error'
 import { loadFileAsync, writeFileAsync } from './utils/file'
 import { resolveYamlFile } from './utils/resolveYaml'
+import { resolveConfig } from './utils/resolveConfig'
 import { joinPath } from './utils/path'
 
 export async function mainAsync() {
@@ -73,6 +74,8 @@ type InjectParams = {
   module?: Module
   /** Your env config mode */
   mode: string
+  /** Inject extra config with runtime */
+  config?: Record<string, any>
 }
 
 /**
@@ -84,7 +87,10 @@ export async function injectAsync({
   output,
   mode,
   module,
+  config,
 }: InjectParams) {
+  module = module || 'esm'
+
   const _input = joinPath(input)
   if (!existsSync(_input)) {
     throwError(`File '${_input}' doesn't exsits`)
@@ -98,16 +104,22 @@ export async function injectAsync({
   const fileContent = await loadFileAsync(_input)
 
   // 2. parse file and mix env
-  const result = resolveFileToTarget(fileContent, {
+  const targetType = getTargetLang(output)
+  let result = resolveFileToTarget(fileContent, {
     type: 'yaml',
-    targetType: getTargetLang(output),
-    module: module || 'esm',
+    targetType,
+    module,
     mode,
   })
 
+  // 3. append extra config
+  if (config) {
+    result = resolveConfig(config, module, targetType) + result
+  }
+
   // console.log("=== parse result:")
   // console.log(result)
-  // 3. write file
+  // 4. write file
   await writeFileAsync(joinPath(output), result)
 }
 
